@@ -1,5 +1,7 @@
 package com.team2.centennial_helper;
 
+import com.team2.centennial_helper.util.Util;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -10,8 +12,26 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class ExampleUnitTest {
+
+
     @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+    public void check_correctEmail() {
+        assertTrue(Util.isValidEmail("pmangla@my.centennialcollege.ca"));
     }
+
+    @Test
+    public void check_invalidEmail() {
+        assertTrue(Util.isValidEmail("pmangla@my"));
+    }
+
+    @Test
+    public void check_correctPw() {
+        assertTrue(Util.isValidPw("password123"));
+    }
+
+    @Test
+    public void check_invalidPw() {
+        assertTrue(Util.isValidPw("pw123"));
+    }
+
 }
