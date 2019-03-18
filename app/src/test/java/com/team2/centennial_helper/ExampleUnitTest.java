@@ -1,8 +1,11 @@
 package com.team2.centennial_helper;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.team2.centennial_helper.unit_test.Auth;
 import com.team2.centennial_helper.util.Util;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import static org.junit.Assert.*;
 
@@ -34,4 +37,23 @@ public class ExampleUnitTest {
         assertTrue(Util.isValidPw("pw123"));
     }
 
+    @Test
+    public void check_loggedInUser(){
+
+        FirebaseAuth firebaseAuth = Mockito.mock(FirebaseAuth.class);
+        Mockito.when(firebaseAuth.getUid()).thenReturn("123456789");
+
+        Auth auth = new Auth(firebaseAuth);
+        assertTrue(auth.getId());
+    }
+
+    @Test
+    public void check_notLoggedInUser(){
+
+        FirebaseAuth firebaseAuth = Mockito.mock(FirebaseAuth.class);
+        Mockito.when(firebaseAuth.getUid()).thenReturn("");
+
+        Auth auth = new Auth(firebaseAuth);
+        assertTrue(auth.getId());
+    }
 }
