@@ -1,10 +1,9 @@
-package com.team2.centennial_helper;
+package com.team2.centennial_helper.common;
 
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
+import androidx.annotation.NonNull;
 import android.os.Bundle;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,8 +13,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+import com.team2.centennial_helper.R;
+import com.team2.centennial_helper.employee.EmployeeHomeActivity;
+import com.team2.centennial_helper.student.CreateTicketActivity;
+import com.team2.centennial_helper.student.StudentHomeActivity;
+import com.team2.centennial_helper.util.Util;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends Activity {
     private Button button;
     private EditText mEmail, mPw;
     private String email, password, error="Field Required";
@@ -60,7 +67,25 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
                             if (task.isSuccessful()) {
-                                startActivity(new Intent(LoginActivity.this, StudentHomeActivity.class));
+
+                                Util.database.getReference("users/usertype/"+FirebaseAuth.getInstance().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                        if(dataSnapshot.getValue(Integer.class) == 0){
+                                            startActivity(new Intent(LoginActivity.this, EmployeeHomeActivity.class));
+                                        }
+                                        else {
+                                            startActivity(new Intent(LoginActivity.this, StudentHomeActivity.class));
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Toast.makeText(LoginActivity.this, "Authentication failed: "+task.getException().getLocalizedMessage(),

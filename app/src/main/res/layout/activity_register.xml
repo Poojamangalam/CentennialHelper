@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorTxt"
-    tools:context=".RegisterActivity">
+    tools:context=".common.RegisterActivity">
 
     <TextView
         android:id="@+id/label_firstName"
@@ -37,51 +37,54 @@
         android:paddingTop="20dp"
         android:text="Register"
         android:textColor="@color/colorTxt"
-
         app:fontFamily="sans-serif-black" />
 
     <EditText
         android:id="@+id/txt_FirstName"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:textColor="@color/colorPrimaryDark" />
 
     <EditText
         android:id="@+id/txt_LastName"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="120dp"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:textColor="@color/colorPrimaryDark" />
 
     <EditText
         android:id="@+id/txt_email"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="160dp"
         android:ems="10"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:textColor="@color/colorPrimaryDark" />
 
     <EditText
         android:id="@+id/txt_password"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="200dp"
         android:ems="10"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textColor="@color/colorPrimaryDark" />
 
     <Button
         android:id="@+id/btn_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="230dp"
+        android:layout_below="@+id/chooseUserType"
         android:text="Register" />
 
     <TextView
@@ -101,4 +104,12 @@
         android:layout_marginTop="150dp"
         android:text="Email"
         android:textSize="10sp" />
+
+    <Spinner
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/chooseUserType"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/txt_password"
+        />
 </RelativeLayout>

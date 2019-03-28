@@ -1,11 +1,11 @@
 package com.team2.centennial_helper;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-public class CreateRequestActivity extends AppCompatActivity {
+public class CreateRequestActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

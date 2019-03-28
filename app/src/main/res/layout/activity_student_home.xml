@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="Welcome!"
+        android:text="Welcome Student!"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="15sp"
         android:textStyle="bold"
@@ -71,5 +71,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="120dp"
         android:text="Create Request"
+        android:textColor="@color/colorTxt" />
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btn_TicketHistory"
+        android:text="Logout"
         android:textColor="@color/colorTxt" />
 </RelativeLayout>

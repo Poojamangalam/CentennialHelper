@@ -1,9 +1,15 @@
 package com.team2.centennial_helper.util;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Util {
+
+    // Write a message to the database
+    public static FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     public static boolean isValidEmail(String email){
 
@@ -22,5 +28,7 @@ public class Util {
             return false;
         }
     }
+
+
 
 }
