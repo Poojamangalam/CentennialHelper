@@ -16,6 +16,8 @@ import android.widget.GridView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.team2.centennial_helper.R;
 import com.team2.centennial_helper.common.LoginActivity;
+import com.team2.centennial_helper.student.StudentHomeActivity;
+import com.team2.centennial_helper.util.Util;
 
 public class EmployeeHomeActivity extends Activity {
     
@@ -32,6 +34,7 @@ public class EmployeeHomeActivity extends Activity {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
+                Util.setSharedPref(EmployeeHomeActivity.this, -1);
                 startActivity(new Intent(EmployeeHomeActivity.this,LoginActivity.class));
                 finish();
             }

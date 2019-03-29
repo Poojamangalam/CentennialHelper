@@ -1,6 +1,7 @@
 package com.team2.centennial_helper.student.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,11 +9,13 @@ import android.widget.TextView;
 
 import com.team2.centennial_helper.R;
 import com.team2.centennial_helper.pojo.TicketInfo;
+import com.team2.centennial_helper.student.CreateTicketActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class DisplayTicketAdapter extends RecyclerView.Adapter<DisplayTicketAdapter.ViewHolder> {
@@ -35,7 +38,7 @@ public class DisplayTicketAdapter extends RecyclerView.Adapter<DisplayTicketAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        TicketInfo ticketInfo = ticketInfos.get(position);
+        final TicketInfo ticketInfo = ticketInfos.get(position);
         holder.ticketNumber.setText(ticketInfo.getTicketKey());
         holder.time.setText(ticketInfo.getTime());
 
@@ -48,6 +51,16 @@ public class DisplayTicketAdapter extends RecyclerView.Adapter<DisplayTicketAdap
         else if(ticketInfo.getTicketType() == 2){
             holder.category.setText("Add/Drop a course");
         }
+
+        holder.ticketCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, CreateTicketActivity.class)
+                        .putExtra("ticket_info",ticketInfo)
+                        .putExtra("is_review", true));
+
+            }
+        });
     }
 
     @Override
@@ -57,10 +70,12 @@ public class DisplayTicketAdapter extends RecyclerView.Adapter<DisplayTicketAdap
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
+        private CardView ticketCard;
         private TextView ticketNumber, time, category;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
+            ticketCard = itemView.findViewById(R.id.ticketCard);
             ticketNumber = itemView.findViewById(R.id.displayTicketNumber);
             time = itemView.findViewById(R.id.displayTicketTime);
             category = itemView.findViewById(R.id.displayCategory);

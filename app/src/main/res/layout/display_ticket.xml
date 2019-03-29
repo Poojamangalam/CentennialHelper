@@ -2,20 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="3dp"
     >
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/ticketCard"
         android:layout_margin="5dp"
-        android:padding="10dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="10dp"
+
             >
 
             <LinearLayout
@@ -47,7 +51,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Time"
+                    android:text="Time:"
                     android:textColor="#000"
                     android:layout_weight="0.3"
                     />
@@ -68,7 +72,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Category"
+                    android:text="Category:"
                     android:textColor="#000"
                     android:layout_weight="0.3"
                     />

@@ -1,9 +1,14 @@
 package com.team2.centennial_helper.student;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -21,20 +26,33 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class CreateTicketActivity extends AppCompatActivity {
+public class CreateTicketActivity extends Activity {
 
     private TextInputEditText mStudentNumber, mProgramName, mCourseName, mDiscription;
     private Spinner mOption;
     private MaterialButton mSubmit;
+    private String key = "";
+    private LinearLayout mainLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_ticket);
-
         initUi();
+
+        Intent intent = getIntent();
+        TicketInfo ticketInfo = (TicketInfo) intent.getSerializableExtra("ticket_info");
+
+        if(ticketInfo != null){
+
+            mStudentNumber.setText(ticketInfo.getStudentNo());
+            mDiscription.setText(ticketInfo.getDiscription());
+            mProgramName.setText(ticketInfo.getProgramName());
+            mCourseName.setText(ticketInfo.getCourseName());
+            mOption.setSelection(ticketInfo.getTicketType());
+            key = ticketInfo.getTicketKey();
+
+        }
     }
 
     private void initUi() {
@@ -54,7 +72,6 @@ public class CreateTicketActivity extends AppCompatActivity {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mOption.setAdapter(dataAdapter);
 
-
         mSubmit = findViewById(R.id.ctCreateTicket);
 
         mSubmit.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +86,10 @@ public class CreateTicketActivity extends AppCompatActivity {
                 ticketInfo.setTicketType(mOption.getSelectedItemPosition());
                 ticketInfo.setUid(FirebaseAuth.getInstance().getUid());
 
-                String key = Util.database.getReference("/tickets/").push().getKey();
+                if(key.equals("")){
+                    key = Util.database.getReference("/tickets/").push().getKey();
+                }
+
                 ticketInfo.setTicketKey(key);
 
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -81,7 +101,9 @@ public class CreateTicketActivity extends AppCompatActivity {
                         .addOnCompleteListener(CreateTicketActivity.this, new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(Task<Void> task) {
+                                startActivity(new Intent(CreateTicketActivity.this, DisplayTickets.class));
                                 Toast.makeText(CreateTicketActivity.this, "Ticket Added", Toast.LENGTH_SHORT).show();
+                                finish();
                             }
                         });
             }

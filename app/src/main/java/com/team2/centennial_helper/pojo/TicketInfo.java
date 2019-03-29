@@ -1,6 +1,8 @@
 package com.team2.centennial_helper.pojo;
 
-public class TicketInfo {
+import java.io.Serializable;
+
+public class TicketInfo implements Serializable {
 
     private String studentNo, discription, programName, courseName, uid, ticketKey, time;
     private int ticketType;

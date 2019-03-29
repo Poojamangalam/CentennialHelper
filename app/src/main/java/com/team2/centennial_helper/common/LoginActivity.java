@@ -1,9 +1,9 @@
 package com.team2.centennial_helper.common;
 
 import android.app.Activity;
-import androidx.annotation.NonNull;
-import android.os.Bundle;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,14 +18,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.team2.centennial_helper.R;
 import com.team2.centennial_helper.employee.EmployeeHomeActivity;
-import com.team2.centennial_helper.student.CreateTicketActivity;
 import com.team2.centennial_helper.student.StudentHomeActivity;
 import com.team2.centennial_helper.util.Util;
+
+import androidx.annotation.NonNull;
 
 public class LoginActivity extends Activity {
     private Button button;
     private EditText mEmail, mPw;
-    private String email, password, error="Field Required";
+    private String email, password, error = "Field Required";
     private FirebaseAuth mAuth;
 
     @Override
@@ -53,13 +54,11 @@ public class LoginActivity extends Activity {
         email = mEmail.getText().toString();
         password = mPw.getText().toString();
 
-        if(email.equals("")){
+        if (email.equals("")) {
             mEmail.setError(error);
-        }
-        else if(password.equals("")){
+        } else if (password.equals("")) {
             mPw.setError(error);
-        }
-        else {
+        } else {
 
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -68,16 +67,18 @@ public class LoginActivity extends Activity {
 
                             if (task.isSuccessful()) {
 
-                                Util.database.getReference("users/usertype/"+FirebaseAuth.getInstance().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                Util.database.getReference("users/usertype/" + FirebaseAuth.getInstance().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                        if(dataSnapshot.getValue(Integer.class) == 0){
+                                        if (dataSnapshot.getValue(Integer.class) == 0) {
+                                            Util.setSharedPref(LoginActivity.this,0);
                                             startActivity(new Intent(LoginActivity.this, EmployeeHomeActivity.class));
-                                        }
-                                        else {
+                                        } else {
+                                            Util.setSharedPref(LoginActivity.this,1);
                                             startActivity(new Intent(LoginActivity.this, StudentHomeActivity.class));
                                         }
+
                                     }
 
                                     @Override
@@ -87,12 +88,14 @@ public class LoginActivity extends Activity {
                                 });
 
                             } else {
-                                // If sign in fails, display a message to the user.
-                                Toast.makeText(LoginActivity.this, "Authentication failed: "+task.getException().getLocalizedMessage(),
+
+                                Toast.makeText(LoginActivity.this, "Authentication failed: " + task.getException().getLocalizedMessage(),
                                         Toast.LENGTH_LONG).show();
                             }
                         }
                     });
         }
     }
+
+
 }

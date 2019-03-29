@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -20,7 +21,7 @@ import com.team2.centennial_helper.util.Util;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DisplayTickets extends AppCompatActivity {
+public class DisplayTickets extends Activity {
 
     private RecyclerView recyclerView;
     private List<TicketInfo> ticketInfos = new ArrayList<>();
