@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.team2.centennial_helper.MainActivity;
 import com.team2.centennial_helper.R;
 import com.team2.centennial_helper.common.LoginActivity;
 import com.team2.centennial_helper.pojo.User;
@@ -52,7 +53,7 @@ public class StudentHomeActivity extends Activity {
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
                 Util.setSharedPref(StudentHomeActivity.this, -1);
-                startActivity(new Intent(StudentHomeActivity.this,LoginActivity.class));
+                startActivity(new Intent(StudentHomeActivity.this,MainActivity.class));
                 finish();
             }
         });

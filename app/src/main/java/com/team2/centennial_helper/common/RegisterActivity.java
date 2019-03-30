@@ -5,10 +5,12 @@ import androidx.annotation.NonNull;
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,7 +35,8 @@ public class RegisterActivity extends Activity {
     private EditText mFirstName, mLastName, mEmail, mPw;
     private FirebaseAuth mAuth;
     private DatabaseReference myRef = Util.database.getReference("users");
-    private Spinner chooseUser;
+    private Spinner chooseUser, chooseDepartment;
+    private TextView departmentLabel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,6 @@ public class RegisterActivity extends Activity {
         setContentView(R.layout.activity_register);
 
         mAuth = FirebaseAuth.getInstance();
-
         initUi();
     }
 
@@ -53,6 +55,8 @@ public class RegisterActivity extends Activity {
         mPw = findViewById(R.id.txt_password);
         register = findViewById(R.id.btn_register);
         chooseUser = findViewById(R.id.chooseUserType);
+        chooseDepartment = findViewById(R.id.chooseDepartment);
+        departmentLabel = findViewById(R.id.departmentLabel);
 
         List<String> userTypes = new ArrayList<String>();
         userTypes.add("Employee");
@@ -62,6 +66,35 @@ public class RegisterActivity extends Activity {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         chooseUser.setAdapter(dataAdapter);
 
+        chooseUser.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if(position == 0){
+                    chooseDepartment.setVisibility(View.VISIBLE);
+                    departmentLabel.setVisibility(View.VISIBLE);
+                }
+                else {
+                    chooseDepartment.setVisibility(View.GONE);
+                    departmentLabel.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        List<String> departmentType = new ArrayList<String>();
+        departmentType.add("Finance");
+        departmentType.add("Time Table Change");
+        departmentType.add("Add/Drop a course");
+
+        ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, departmentType);
+        dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        chooseDepartment.setAdapter(dataAdapter1);
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +149,7 @@ public class RegisterActivity extends Activity {
 
         if(chooseUser.getSelectedItemPosition() == 0){
             user.setUserType(0);
+            user.setDepartment(chooseDepartment.getSelectedItemPosition());
             myRef.child("employee/"+FirebaseAuth.getInstance().getUid()).setValue(user);
             myRef.child("usertype/"+FirebaseAuth.getInstance().getUid()).setValue(0);
             startActivity(new Intent(RegisterActivity.this, EmployeeHomeActivity.class));
@@ -123,6 +157,7 @@ public class RegisterActivity extends Activity {
         }
         else {
             user.setUserType(1);
+            user.setDepartment(-1);
             myRef.child("student/"+FirebaseAuth.getInstance().getUid()).setValue(user);
             myRef.child("usertype/"+FirebaseAuth.getInstance().getUid()).setValue(1);
             startActivity(new Intent(RegisterActivity.this, StudentHomeActivity.class));

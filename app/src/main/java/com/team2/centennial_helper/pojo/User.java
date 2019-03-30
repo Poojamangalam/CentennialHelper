@@ -3,7 +3,7 @@ package com.team2.centennial_helper.pojo;
 public class User {
 
     private String firstName,lastName,email;
-    private int userType;
+    private int userType, department;
 
     public String getFirstName() {
         return firstName;
@@ -35,5 +35,13 @@ public class User {
 
     public void setUserType(int userType) {
         this.userType = userType;
+    }
+
+    public int getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(int department) {
+        this.department = department;
     }
 }
