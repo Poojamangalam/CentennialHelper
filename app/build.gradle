@@ -33,8 +33,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:16.1.0'
     implementation 'com.google.firebase:firebase-auth:16.2.0'
     implementation 'com.google.android.material:material:1.0.0'
-
+    implementation 'com.kofigyan.stateprogressbar:stateprogressbar:1.0.0'
+    
     testImplementation 'org.powermock:powermock:1.6.5'
     testImplementation 'org.powermock:powermock-module-junit4:1.6.5'
     testImplementation 'org.powermock:powermock-api-mockito:1.6.5'
+
 }

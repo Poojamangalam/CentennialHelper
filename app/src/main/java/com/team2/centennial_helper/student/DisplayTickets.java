@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ public class DisplayTickets extends Activity {
 
         mLabel = findViewById(R.id.noTicketsMsg);
         recyclerView = findViewById(R.id.displayTicketRv);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DisplayTickets.this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
