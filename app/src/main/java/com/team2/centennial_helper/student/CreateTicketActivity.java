@@ -100,6 +100,7 @@ public class CreateTicketActivity extends Activity {
                 mAccept.setEnabled(false);
             }
 
+
             key = ticketInfo.getTicketKey();
 
 
