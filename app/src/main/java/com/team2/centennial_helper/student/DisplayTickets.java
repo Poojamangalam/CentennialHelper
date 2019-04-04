@@ -53,11 +53,12 @@ public class DisplayTickets extends Activity {
             departmentType = -1;
         }
 
-        Util.database.getReference("/tickets/").addListenerForSingleValueEvent(new ValueEventListener() {
+        Util.database.getReference("/tickets/").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.e("KEY:", dataSnapshot.getValue().toString());
 
+                ticketInfos.clear();
                 for (final DataSnapshot valueSnapshot : dataSnapshot.getChildren()) {
                     Util.database.getReference("/tickets/" + valueSnapshot.getKey())
                             .addListenerForSingleValueEvent(new ValueEventListener() {

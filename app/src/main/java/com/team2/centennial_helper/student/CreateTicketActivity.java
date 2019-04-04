@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import androidx.cardview.widget.CardView;
+
 public class CreateTicketActivity extends Activity {
 
     private TextInputEditText mStudentNumber, mProgramName, mCourseName, mDiscription;
@@ -42,6 +44,7 @@ public class CreateTicketActivity extends Activity {
     private String[] descriptionData = {"Submitted","In-Progress","Ticket Closed"};
     private EditText mComments;
     private TicketInfo ticketInfo = null;
+    private CardView actionView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +75,16 @@ public class CreateTicketActivity extends Activity {
                 ticketType.setText("Add/Drop a course");
             }
 
+            if (ticketInfo.getUid().equals(FirebaseAuth.getInstance().getUid())){
+                mAccept.setVisibility(View.GONE);
+            }
+
             if(ticketInfo.getTicketStatus()==0){
                 stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.ONE);
+                if (ticketInfo.getUid().equals(FirebaseAuth.getInstance().getUid())){
+                    mComments.setHint("Comments from college employee will be provided here once the ticket is accepted");
+                    mComments.setEnabled(false);
+                }
             }
             else if(ticketInfo.getTicketStatus()==1){
                 stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.TWO);
@@ -85,11 +96,12 @@ public class CreateTicketActivity extends Activity {
                 stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.THREE);
                 mComments.setText(ticketInfo.getComment());
                 mComments.setEnabled(false);
-                mAccept.setVisibility(View.GONE);
-
+                mAccept.setText("Ticket Closed");
+                mAccept.setEnabled(false);
             }
 
             key = ticketInfo.getTicketKey();
+
 
         }
         else {
@@ -114,6 +126,7 @@ public class CreateTicketActivity extends Activity {
         createTicket = findViewById(R.id.createTicketLayout);
         displayTicket = findViewById(R.id.displayTicketLayout);
 
+        actionView = findViewById(R.id.ticketActions);
         stateProgressBar = findViewById(R.id.state_progress_bar);
         stateProgressBar.setStateDescriptionData(descriptionData);
         stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.ONE);
@@ -154,6 +167,8 @@ public class CreateTicketActivity extends Activity {
                         ticketInfo.setComment(comment);
                         ticketInfo.setTicketStatus(1);
                         stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.TWO);
+                        mComments.setEnabled(false);
+                        mAccept.setText("Close Ticket");
                         Util.database.getReference("/tickets/"+ticketInfo.getTicketKey()).setValue(ticketInfo);
                     }
                 }
@@ -161,6 +176,7 @@ public class CreateTicketActivity extends Activity {
                     ticketInfo.setTicketStatus(2);
                     stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.THREE);
                     Util.database.getReference("/tickets/"+ticketInfo.getTicketKey()).setValue(ticketInfo);
+
                 }
 
             }
