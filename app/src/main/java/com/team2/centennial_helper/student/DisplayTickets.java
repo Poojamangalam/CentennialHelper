@@ -3,8 +3,11 @@ package com.team2.centennial_helper.student;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +33,9 @@ public class DisplayTickets extends Activity {
     private RecyclerView recyclerView;
     private List<TicketInfo> ticketInfos = new ArrayList<>();
     private int departmentType = -1;
+    private EditText mSearch;
+    private String searchText = "";
+    private ValueEventListener valueEventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +44,26 @@ public class DisplayTickets extends Activity {
 
         mLabel = findViewById(R.id.noTicketsMsg);
         recyclerView = findViewById(R.id.displayTicketRv);
+        mSearch = findViewById(R.id.searchTicket);
+
+        mSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                searchText = s.toString();
+                Util.database.getReference("/tickets/").addListenerForSingleValueEvent(valueEventListener);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DisplayTickets.this);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -53,10 +79,10 @@ public class DisplayTickets extends Activity {
             departmentType = -1;
         }
 
-        Util.database.getReference("/tickets/").addValueEventListener(new ValueEventListener() {
+
+        valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.e("KEY:", dataSnapshot.getValue().toString());
 
                 ticketInfos.clear();
                 for (final DataSnapshot valueSnapshot : dataSnapshot.getChildren()) {
@@ -64,17 +90,36 @@ public class DisplayTickets extends Activity {
                             .addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    Log.e("SNAPSHOT", dataSnapshot.getValue().toString());
+
                                     TicketInfo ticketInfo = dataSnapshot.getValue(TicketInfo.class);
 
                                     if (departmentType != -1) {
                                         if (ticketInfo.getTicketType() == departmentType) {
-                                            ticketInfos.add(ticketInfo);
+                                            if(searchText.equals("")){
+                                                ticketInfos.add(ticketInfo);
+                                            }
+                                            else {
+                                                String cs = ticketInfo.getTicketKey().toLowerCase();
+
+                                                if(cs.contains(searchText.toLowerCase())){
+                                                    ticketInfos.add(ticketInfo);
+                                                }
+                                            }
                                         }
                                     } else {
 
                                         if (ticketInfo.getUid().equals(FirebaseAuth.getInstance().getUid())) {
-                                            ticketInfos.add(ticketInfo);
+                                            if(searchText.equals("")){
+                                                ticketInfos.add(ticketInfo);
+                                            }
+                                            else {
+                                                String cs = ticketInfo.getTicketKey().toLowerCase();
+
+                                                if(cs.contains(searchText.toLowerCase())){
+                                                    ticketInfos.add(ticketInfo);
+                                                }
+                                            }
+
                                         }
                                         if (ticketInfos.size() == 0) {
                                             recyclerView.setVisibility(View.GONE);
@@ -104,6 +149,8 @@ public class DisplayTickets extends Activity {
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(DisplayTickets.this, "Connection Error", Toast.LENGTH_SHORT).show();
             }
-        });
+        };
+
+        Util.database.getReference("/tickets/").addValueEventListener(valueEventListener);
     }
 }
