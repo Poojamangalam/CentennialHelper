@@ -101,10 +101,10 @@ public class RegisterActivity extends Activity {
             public void onClick(View v) {
                 email = mEmail.getText().toString();
 
-                /*if(!email.endsWith("@my.centennialcollege.ca")){
+                if(!email.endsWith("@my.centennialcollege.ca")){
                     mEmail.setError("please login with centennial college email address");
                     return;
-                }*/
+                }
                 pw = mPw.getText().toString();
                 firstName = mFirstName.getText().toString();
                 lastName = mLastName.getText().toString();

@@ -37,8 +37,14 @@ public class StudentHomeActivity extends Activity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if(dataSnapshot!=null){
-                    User user = dataSnapshot.getValue(User.class);
-                    mName.setText("Welcome, "+user.getFirstName()+" "+user.getLastName()+"!");
+
+                    try {
+                        User user = dataSnapshot.getValue(User.class);
+                        mName.setText("Welcome, " + user.getFirstName() + " " + user.getLastName() + "!");
+                    }catch (Exception e){
+                        startActivity(new Intent(StudentHomeActivity.this, MainActivity.class));
+                        finish();
+                    }
                 }
             }
 

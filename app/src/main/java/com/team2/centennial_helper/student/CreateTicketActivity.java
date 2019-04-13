@@ -191,6 +191,16 @@ public class CreateTicketActivity extends Activity {
             @Override
             public void onClick(View v) {
 
+                if(mStudentNumber.getText().toString().equals("")
+                    || mDiscription.getText().toString().equals("")
+                    || mProgramName.getText().toString().equals("")
+                    || mCourseName.getText().toString().equals("")
+                    ){
+
+                    Toast.makeText(CreateTicketActivity.this,"All fields are rquired",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 TicketInfo ticketInfo = new TicketInfo();
                 ticketInfo.setStudentNo(mStudentNumber.getText().toString());
                 ticketInfo.setDiscription(mDiscription.getText().toString());
