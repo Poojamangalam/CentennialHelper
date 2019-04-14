@@ -90,13 +90,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/ctCreateTicket"
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:background="@color/colorPrimary"
                 android:text="Submit" />
 
         </LinearLayout>
@@ -287,13 +289,13 @@
                         android:layout_margin="5dp"
                         app:spb_animateToCurrentProgressState="true"
                         app:spb_checkStateCompleted="true"
-                        app:spb_currentStateDescriptionColor="#009688"
+                        app:spb_currentStateDescriptionColor="#43A047"
                         app:spb_maxStateNumber="three"
                         app:spb_stateBackgroundColor="#BDBDBD"
                         app:spb_stateDescriptionColor="#A000"
-                        app:spb_stateForegroundColor="#009688"
+                        app:spb_stateForegroundColor="#43A047"
                         app:spb_stateNumberBackgroundColor="#808080"
-                        app:spb_stateNumberForegroundColor="#eeeeee" />
+                        app:spb_stateNumberForegroundColor="#FFFF" />
 
                 </LinearLayout>
 
@@ -337,12 +339,16 @@
                         android:minLines="2"
                         android:scrollbars="vertical" />
 
-                    <com.google.android.material.button.MaterialButton
+                    <Button
                         android:id="@+id/acceptTicket"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="Accept Ticket" />
+                        android:textColor="@color/colorPrimaryDark"
+                        android:background="@color/colorPrimary"
+                        android:text="Accept Ticket"
+                        style="@style/Widget.MaterialComponents.Button"
+                        />
 
                 </LinearLayout>
 
