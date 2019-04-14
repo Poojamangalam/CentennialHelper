@@ -10,20 +10,30 @@
 
     <Button
         android:id="@+id/btn_register"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="false"
         android:layout_alignParentBottom="false"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="260dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
+        app:cornerRadius="5dp"
+        style="@style/Widget.MaterialComponents.Button"
         android:text="Register" />
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="false"
         android:layout_centerVertical="false"
         android:layout_marginTop="200dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
+        app:cornerRadius="5dp"
+        style="@style/Widget.MaterialComponents.Button"
         android:text="Log In" />
 
     <ImageView
@@ -33,7 +43,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
         android:layout_marginTop="30dp"
-        app:srcCompat="@drawable/logo"
+        android:src="@drawable/logo"
         tools:layout_editor_absoluteX="149dp"
         tools:layout_editor_absoluteY="98dp" />
 

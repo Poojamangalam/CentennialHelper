@@ -7,6 +7,7 @@ import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -36,7 +37,7 @@ public class CreateTicketActivity extends Activity {
     private TextView studentNumber, programName, courseName, discription, ticketType;
 
     private Spinner mOption;
-    private MaterialButton mSubmit, mAccept;
+    private Button mSubmit, mAccept;
     private String key = "", comments;
     private LinearLayout mainLayout;
     private LinearLayout createTicket, displayTicket;
